@@ -20,15 +20,15 @@ interface TypographyProps {
 }
 
 const variantClasses: Record<TypographyVariant, string> = {
-  h1: "ui-text-5xl ui-pb-12 ui-text-custom-header-dark-green",
-  h2: "ui-text-4xl ui-pb-10 ui-text-custom-header-dark-green",
-  h3: "ui-text-3xl ui-pb-8 ui-text-custom-header-dark-green",
-  h4: "ui-text-2xl ui-pb-6 ui-text-custom-header-dark-green",
-  h5: "ui-mb-3 ui-text-2xl ui-font-semibold ui-text-custom-header-dark-green",
-  h6: "ui-text-xl ui-pb-4 ui-text-custom-header-dark-green",
-  p: "ui-text-base ui-mb-4 ui-text-gray-700",
-  small: "ui-text-sm ui-text-gray-600",
-  label: "ui-text-sm ui-font-medium ui-text-gray-700",
+  h1: "text-5xl ui-pb-12",
+  h2: "text-4xl ui-pb-10 ",
+  h3: "text-3xl ui-pb-8 ",
+  h4: "text-2xl ui-pb-6 ",
+  h5: "mb-3 ui-text-2xl ui-font-semibold ",
+  h6: "text-xl ui-pb-4 ",
+  p: "text-base ui-mb-4 text-gray-700",
+  small: "text-sm text-gray-600",
+  label: "text-sm font-medium ui-text-gray-700",
 };
 
 const defaultElementMap: Record<
