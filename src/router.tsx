@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import { Error } from "./pages";
 import { Home } from "./pages";
 import { Contact } from "./pages";
-
 import { About } from "./pages";
+import { Intranet } from "./pages";
 import { Privacy } from "./pages";
 import { Mentions } from "./pages";
 
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
         path: "about",
         element: <About />,
       },
+      { path: "intranet", element: <Intranet /> },
       {
         path: "privacy-policy",
         element: <Privacy />,

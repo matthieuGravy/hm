@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import classNames from "classnames";
+import { cn } from "@/lib/utils";
 
 type TypographyVariant =
   | "h1"
@@ -20,15 +20,16 @@ interface TypographyProps {
 }
 
 const variantClasses: Record<TypographyVariant, string> = {
-  h1: "text-5xl ui-pb-12",
-  h2: "text-4xl ui-pb-10 ",
-  h3: "text-3xl ui-pb-8 ",
-  h4: "text-2xl ui-pb-6 ",
-  h5: "mb-3 ui-text-2xl ui-font-semibold ",
-  h6: "text-xl ui-pb-4 ",
-  p: "text-base ui-mb-4 text-gray-700",
-  small: "text-sm text-gray-600",
-  label: "text-sm font-medium ui-text-gray-700",
+  h1: "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
+  h2: "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0",
+  h3: "scroll-m-20 text-2xl font-semibold tracking-tight",
+  h4: "scroll-m-20 text-xl font-semibold tracking-tight",
+  h5: "scroll-m-20 text-lg font-semibold tracking-tight",
+  h6: "scroll-m-20 text-base font-semibold tracking-tight",
+  p: "leading-7 [&:not(:first-child)]:mt-6",
+  small: "text-sm font-medium leading-none",
+  label:
+    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
 };
 
 const defaultElementMap: Record<
@@ -55,9 +56,7 @@ const Typography = ({
   const Tag = as || defaultElementMap[variant];
 
   return (
-    <Tag className={classNames(className, variantClasses[variant])}>
-      {children}
-    </Tag>
+    <Tag className={cn(variantClasses[variant], className)}>{children}</Tag>
   );
 };
 
