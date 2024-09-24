@@ -1,5 +1,12 @@
+import { Outlet, ScrollRestoration } from "react-router-dom";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <Outlet />
+      <ScrollRestoration />
+    </>
+  );
 }
 
 export default App;
