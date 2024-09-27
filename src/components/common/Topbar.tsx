@@ -7,7 +7,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-
+import { ThemeToggle } from "./ThemeToggle";
 export const Topbar = () => {
   const links = [
     { path: "/contact", title: "Contact" },
@@ -47,6 +47,7 @@ export const Topbar = () => {
         <div className="flex items-center space-x-4">
           <Button variant="outline">Login</Button>
           <Button>Sign Up</Button>
+          <ThemeToggle />
         </div>
       </div>
     </header>
