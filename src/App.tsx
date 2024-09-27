@@ -1,5 +1,5 @@
 import { Outlet, ScrollRestoration } from "react-router-dom";
-import Topbar from "@/components/common/Topbar";
+import { Topbar } from "@/components/common/";
 
 function App() {
   return (
