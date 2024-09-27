@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 
-const Topbar = () => {
+export const Topbar = () => {
   const links = [
     { path: "/contact", title: "Contact" },
     { path: "/about", title: "About" },
@@ -52,5 +52,3 @@ const Topbar = () => {
     </header>
   );
 };
-
-export default Topbar;

@@ -1,0 +1,8 @@
+{
+    "jumbotron": {
+      "title": "Welcome to HM",
+      "content": "Discover our learnigns projects",
+      "buttonPrimary": "Discover More",
+      "buttonSecondary": "Contact Us"
+    }
+}
