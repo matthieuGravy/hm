@@ -10,7 +10,10 @@ import {
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import { ThemeToggle, Modal } from "@/components/common";
-import { LoginForm, RegistrationForm } from "@/components/authentication";
+import {
+  LoginFormContent,
+  RegistrationForm,
+} from "@/components/authentication";
 
 export const Topbar = () => {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
@@ -142,7 +145,7 @@ export const Topbar = () => {
         <RegistrationForm onSwitchToLogin={openLoginModal} />
       </Modal>
       <Modal open={isLoginModalOpen} onClose={closeLoginModal}>
-        <LoginForm onSwitchToSignUp={openSignUpModal} />
+        <LoginFormContent onSwitchToSignUp={openSignUpModal} />
       </Modal>
     </>
   );
