@@ -4,3 +4,4 @@ export { ErrorComponent } from "./ErrorComponent";
 export { ThemeToggle } from "./ThemeToggle";
 export { Typography } from "./Typography";
 export { Topbar } from "./Topbar";
+export { Modal } from "./Modal";
