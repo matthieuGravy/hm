@@ -1,13 +1,5 @@
-import React from "react";
-
-import { Typography } from "./Typography";
-
-interface JumbotronProps {
-  title: string;
-  paragraph: string;
-  children?: React.ReactNode;
-  backgroundImage?: string;
-}
+import { Typography } from "@/components/common";
+import { JumbotronProps } from "@/types/common";
 
 export const Jumbotron: React.FC<JumbotronProps> = ({
   title,

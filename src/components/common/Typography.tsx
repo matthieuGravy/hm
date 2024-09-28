@@ -1,23 +1,5 @@
-import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-
-type TypographyVariant =
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | "p"
-  | "small"
-  | "label";
-
-interface TypographyProps {
-  as?: keyof JSX.IntrinsicElements;
-  variant: TypographyVariant;
-  children: ReactNode;
-  className?: string;
-}
+import { TypographyVariant, TypographyProps } from "@/types/common";
 
 const variantClasses: Record<TypographyVariant, string> = {
   h1: "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",

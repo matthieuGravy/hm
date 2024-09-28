@@ -1,9 +1,6 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui";
 import { XCircle } from "lucide-react";
-
-interface ErrorComponentProps {
-  message: string;
-}
+import { ErrorComponentProps } from "@/types/common";
 
 export const ErrorComponent: React.FC<ErrorComponentProps> = ({ message }) => {
   return (
