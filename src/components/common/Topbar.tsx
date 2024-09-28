@@ -11,10 +11,12 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { Modal } from "./Modal";
 import { RegistrationForm } from "../authentication/RegistrationForm";
+import { LoginForm } from "../authentication/LoginForm";
 import { Menu } from "lucide-react";
 
 export const Topbar = () => {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const links = [
@@ -23,8 +25,20 @@ export const Topbar = () => {
     { path: "/intranet", title: "Intranet" },
   ];
 
-  const openSignUpModal = () => setIsSignUpModalOpen(true);
+  const openSignUpModal = () => {
+    setIsLoginModalOpen(false);
+    setIsSignUpModalOpen(true);
+  };
+
   const closeSignUpModal = () => setIsSignUpModalOpen(false);
+
+  const openLoginModal = () => {
+    setIsSignUpModalOpen(false);
+    setIsLoginModalOpen(true);
+  };
+
+  const closeLoginModal = () => setIsLoginModalOpen(false);
+
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
@@ -62,7 +76,9 @@ export const Topbar = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline">Login</Button>
+            <Button onClick={openLoginModal} variant="outline">
+              Login
+            </Button>
             <Button onClick={openSignUpModal}>Sign Up</Button>
             <ThemeToggle />
           </div>
@@ -98,7 +114,14 @@ export const Topbar = () => {
                 {link.title}
               </NavLink>
             ))}
-            <Button variant="outline" className="w-full">
+            <Button
+              onClick={() => {
+                openLoginModal();
+                setIsMobileMenuOpen(false);
+              }}
+              variant="outline"
+              className="w-full"
+            >
               Login
             </Button>
             <Button
@@ -118,7 +141,10 @@ export const Topbar = () => {
       </header>
 
       <Modal open={isSignUpModalOpen} onClose={closeSignUpModal}>
-        <RegistrationForm />
+        <RegistrationForm onSwitchToLogin={openLoginModal} />
+      </Modal>
+      <Modal open={isLoginModalOpen} onClose={closeLoginModal}>
+        <LoginForm onSwitchToSignUp={openSignUpModal} />
       </Modal>
     </>
   );

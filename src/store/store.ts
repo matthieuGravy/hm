@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { z } from "zod";
 
-// Définition du schéma Zod
+// Define the Zod schema for registration
 export const registerSchema = z.object({
   name: z
     .string()
@@ -14,24 +14,39 @@ export const registerSchema = z.object({
     .min(8, "Le mot de passe doit contenir au moins 8 caractères"),
 });
 
-// Type inféré à partir du schéma Zod
-type Register = z.infer<typeof registerSchema>;
+// Définine the Zod schema for login
+export const loginSchema = z.object({
+  email: z.string().email("Email invalide"),
+  password: z.string().min(1, "Le mot de passe est requis"),
+});
 
-// Définition de l'interface du store
-interface RegisterStore {
-  register: Register | null;
+// Type from Zod schema
+type Register = z.infer<typeof registerSchema>;
+type Login = z.infer<typeof loginSchema>;
+
+// Define the store
+interface AuthStore {
+  user: Register | null;
+  isAuthenticated: boolean;
   setRegister: (register: Register) => void;
+  setLogin: (login: Login) => void;
+  logout: () => void;
 }
 
-export const useStore = create<RegisterStore>()(
+export const useStore = create<AuthStore>()(
   devtools(
     persist(
       (set) => ({
-        register: null,
-        setRegister: (register) => set({ register }),
+        user: null,
+        isAuthenticated: false,
+        setRegister: (register) =>
+          set({ user: register, isAuthenticated: true }),
+        setLogin: (login) =>
+          set({ user: { ...login, name: "" }, isAuthenticated: true }),
+        logout: () => set({ user: null, isAuthenticated: false }),
       }),
       {
-        name: "register-store",
+        name: "auth-store",
       }
     )
   )
