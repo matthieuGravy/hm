@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -23,26 +24,28 @@ export const RegistrationFormSkeleton: React.FC = () => {
           <Skeleton className="h-4 w-full" />
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-1/4" /> {/* Label */}
-          <Skeleton className="h-10 w-full" /> {/* Input */}
+      <CardContent>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-1/4" /> {/* Label */}
+            <Skeleton className="h-10 w-full" /> {/* Input */}
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-1/4" /> {/* Label */}
+            <Skeleton className="h-10 w-full" /> {/* Input */}
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-1/4" /> {/* Label */}
+            <Skeleton className="h-10 w-full" /> {/* Input */}
+          </div>
+          <Button disabled className="w-full h-10">
+            <Skeleton className="h-4 w-1/2" />
+          </Button>
         </div>
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-1/4" /> {/* Label */}
-          <Skeleton className="h-10 w-full" /> {/* Input */}
-        </div>
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-1/4" /> {/* Label */}
-          <Skeleton className="h-10 w-full" /> {/* Input */}
-        </div>
-        <Button disabled className="w-full h-10">
-          <Skeleton className="h-4 w-1/2" />
-        </Button>
       </CardContent>
       <CardFooter>
-        <div className="w-full">
-          <Skeleton className="h-4 w-full" />
+        <div className="w-full text-center">
+          <Skeleton className="h-4 w-full inline-block" />
         </div>
       </CardFooter>
     </Card>
