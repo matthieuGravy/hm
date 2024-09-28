@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useStore, registerSchema } from "../../store/store";
-import { Formik, Form, Field, FieldProps } from "formik";
+import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,24 @@ import {
 import { loadJsonData } from "@/utils/loadjsondata";
 import { ErrorComponent } from "../common";
 import { RegistrationFormSkeleton } from "./RegisterSkeleton";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+const registerUser = async (userData: RegisterData) => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/register (`, userData);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data.message ||
+          "Une erreur est survenue lors de l'inscription"
+      );
+    }
+    throw new Error("Une erreur inattendue est survenue");
+  }
+};
 
 // type from Zod schema
 type RegisterData = z.infer<typeof registerSchema>;
@@ -30,8 +48,8 @@ interface RegisterUIData {
   labelPassword: string;
   buttonIsSubmitting: string;
   buttonSubmit: string;
-  footerText: string;
-  footerLink: string;
+  cardFooter: string;
+  cardFooterLink: string;
 }
 
 // Registration form component
@@ -78,6 +96,25 @@ export const RegistrationForm: React.FC = () => {
   if (error) return <ErrorComponent message={error} />;
   if (!memoizedRegisterData) return null;
 
+  const handleSubmit = async (
+    values: RegisterData,
+    { setSubmitting, setErrors }: FormikHelpers<RegisterData>
+  ) => {
+    try {
+      const result = await registerUser(values);
+      setRegister(result);
+      console.log("Inscription réussie:", result);
+      // Ici, vous pouvez ajouter une logique pour rediriger l'utilisateur ou afficher un message de succès
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrors({ email: error.message });
+      }
+      console.error("Erreur d'inscription:", error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -90,11 +127,7 @@ export const RegistrationForm: React.FC = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            setRegister(values);
-            setSubmitting(false);
-            console.log("Form submitted:", values);
-          }}
+          onSubmit={handleSubmit}
         >
           {({ errors, touched, isSubmitting }) => (
             <Form className="space-y-4">
@@ -152,9 +185,9 @@ export const RegistrationForm: React.FC = () => {
       </CardContent>
       <CardFooter>
         <p className="text-sm text-center w-full">
-          {memoizedRegisterData.footerText}{" "}
+          {memoizedRegisterData.cardFooter}{" "}
           <a href="#" className="text-blue-500">
-            {memoizedRegisterData.footerLink}
+            {memoizedRegisterData.cardFooterLink}
           </a>
         </p>
       </CardFooter>
