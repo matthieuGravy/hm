@@ -1,40 +1,44 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useStore, loginSchema } from "@/store/store";
+import { useEffect, useState, useMemo } from "react";
+import { useStore, registerSchema } from "@/store/store";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
 import {
-  Button,
-  Input,
-  Label,
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
+  Button,
+  Input,
+  Label,
 } from "@/components/ui";
 import { loadJsonData } from "@/utils/loadjsondata";
 import { ErrorComponent } from "@/components/common";
-import { LoginFormSkeleton } from "@/components/authentication";
-import { loginUser } from "@/api/auth";
-import { LoginUIData, LoginFormContentProps } from "@/types/authentication";
+import { RegistrationFormSkeleton } from "@/components/authentication";
+import { registerUser } from "@/api/auth";
+import {
+  RegisterUIData,
+  RegistrationFormContentProps,
+} from "@/types/authentication";
 
-type LoginData = z.infer<typeof loginSchema>;
+// type from Zod schema
+type RegisterData = z.infer<typeof registerSchema>;
 
-const LoginFormContent: React.FC<LoginFormContentProps> = ({
-  onSwitchToSignUp,
+const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
+  onSwitchToLogin,
 }) => {
-  const setLogin = useStore((state) => state.setLogin);
-  const [loginData, setLoginData] = useState<LoginUIData | null>(null);
+  const setRegister = useStore((state) => state.setRegister);
+  const [registerData, setRegisterData] = useState<RegisterUIData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await loadJsonData("login.json");
-        setLoginData(data.login as LoginUIData);
+        const data = await loadJsonData("register.json");
+        setRegisterData(data.register as RegisterUIData);
         setIsLoading(false);
       } catch (err) {
         setError(
@@ -47,8 +51,9 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
     fetchData();
   }, []);
 
-  const initialValues = useMemo<LoginData>(
+  const initialValues = useMemo<RegisterData>(
     () => ({
+      name: "",
       email: "",
       password: "",
     }),
@@ -56,32 +61,30 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   );
 
   const validationSchema = useMemo(
-    () => toFormikValidationSchema(loginSchema),
+    () => toFormikValidationSchema(registerSchema),
     []
   );
 
-  const memoizedLoginData = useMemo(() => loginData, [loginData]);
+  const memoizedRegisterData = useMemo(() => registerData, [registerData]);
 
-  if (isLoading) return <LoginFormSkeleton />;
+  if (isLoading) return <RegistrationFormSkeleton />;
   if (error) return <ErrorComponent message={error} />;
-  if (!memoizedLoginData) return null;
+  if (!memoizedRegisterData) return null;
 
   const handleSubmit = async (
-    values: LoginData,
-    { setSubmitting, setErrors, setStatus }: FormikHelpers<LoginData>
+    values: RegisterData,
+    { setSubmitting, setErrors }: FormikHelpers<RegisterData>
   ) => {
     try {
-      const result = await loginUser(values);
-      setLogin(result);
-      setStatus({ success: "Connexion réussie" });
-      console.log("Connexion réussie:", result);
-      // Ici, vous pouvez ajouter une logique pour rediriger l'utilisateur ou mettre à jour l'UI
+      const result = await registerUser(values);
+      setRegister(result);
+      console.log("Inscription réussie:", result);
+      // Redirect to ??
     } catch (error) {
       if (error instanceof Error) {
         setErrors({ email: error.message });
-        setStatus({ error: "Échec de la connexion" });
       }
-      console.error("Erreur de connexion:", error);
+      console.error("Erreur d'inscription:", error);
     } finally {
       setSubmitting(false);
     }
@@ -90,8 +93,10 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>{memoizedLoginData.cardTitle}</CardTitle>
-        <CardDescription>{memoizedLoginData.cardDescription}</CardDescription>
+        <CardTitle>{memoizedRegisterData.cardTitle}</CardTitle>
+        <CardDescription>
+          {memoizedRegisterData.cardDescription}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Formik
@@ -99,16 +104,22 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ errors, touched, isSubmitting, status }) => (
+          {({ errors, touched, isSubmitting }) => (
             <Form className="space-y-4">
-              {status && status.error && (
-                <div className="text-red-500 text-sm">{status.error}</div>
-              )}
-              {status && status.success && (
-                <div className="text-green-500 text-sm">{status.success}</div>
-              )}
               <div className="space-y-2">
-                <Label htmlFor="email">{memoizedLoginData.labelEmail}</Label>
+                <Label htmlFor="name">{memoizedRegisterData.labelName}</Label>
+                <Field name="name">
+                  {({ field }: FieldProps) => (
+                    <Input id="name" placeholder="John Doe" {...field} />
+                  )}
+                </Field>
+                {errors.name && touched.name && (
+                  <div className="text-red-500 text-sm">{errors.name}</div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">{memoizedRegisterData.labelEmail}</Label>
                 <Field name="email">
                   {({ field }: FieldProps) => (
                     <Input
@@ -126,7 +137,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
 
               <div className="space-y-2">
                 <Label htmlFor="password">
-                  {memoizedLoginData.labelPassword}
+                  {memoizedRegisterData.labelPassword}
                 </Label>
                 <Field name="password">
                   {({ field }: FieldProps) => (
@@ -140,8 +151,8 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting
-                  ? memoizedLoginData.buttonIsSubmitting
-                  : memoizedLoginData.buttonSubmit}
+                  ? memoizedRegisterData.buttonIsSubmitting
+                  : memoizedRegisterData.buttonSubmit}
               </Button>
             </Form>
           )}
@@ -149,17 +160,17 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
       </CardContent>
       <CardFooter>
         <p className="text-sm text-center w-full">
-          {memoizedLoginData.cardFooter}{" "}
-          {onSwitchToSignUp && (
+          {memoizedRegisterData.cardFooter}{" "}
+          {onSwitchToLogin && (
             <a
               href="#"
               className="text-blue-500"
               onClick={(e) => {
                 e.preventDefault();
-                onSwitchToSignUp();
+                onSwitchToLogin();
               }}
             >
-              {memoizedLoginData.cardFooterLink}
+              {memoizedRegisterData.cardFooterLink}
             </a>
           )}
         </p>
@@ -168,4 +179,4 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   );
 };
 
-export default LoginFormContent;
+export default RegistrationFormContent;

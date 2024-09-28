@@ -1,4 +1,4 @@
 export { RegistrationForm } from "./RegistrationForm";
 export { RegistrationFormSkeleton } from "./RegistrationFormSkeleton";
-export { LoginFormContent } from "./LoginFormContent";
+export { LoginForm } from "./LoginForm";
 export { LoginFormSkeleton } from "./LoginFormSkeleton";

@@ -12,6 +12,9 @@ export interface LoginUIData {
 export interface LoginFormProps {
   onSwitchToSignUp: () => void;
 }
+export interface LoginFormContentProps {
+  onSwitchToSignUp: () => void;
+}
 
 export interface RegisterUIData {
   cardTitle: string;
@@ -26,5 +29,9 @@ export interface RegisterUIData {
 }
 
 export interface RegistrationFormProps {
+  onSwitchToLogin: () => void;
+}
+
+export interface RegistrationFormContentProps {
   onSwitchToLogin: () => void;
 }
