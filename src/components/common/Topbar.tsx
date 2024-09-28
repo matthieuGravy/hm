@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+  Button,
+} from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./ThemeToggle";
-import { Modal } from "./Modal";
-import { RegistrationForm } from "../authentication/RegistrationForm";
-import { LoginForm } from "../authentication/LoginForm";
 import { Menu } from "lucide-react";
+import { ThemeToggle, Modal } from "@/components/common";
+import { LoginForm, RegistrationForm } from "@/components/authentication";
 
 export const Topbar = () => {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);

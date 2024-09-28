@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardHeader,
@@ -6,8 +5,8 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+  Button,
+} from "@/components/ui";
 
 const Skeleton: React.FC<{ className?: string }> = ({ className }) => (
   <div className={`animate-pulse bg-muted ${className}`}></div>
@@ -38,7 +37,9 @@ export const LoginFormSkeleton: React.FC = () => {
         </Button>
       </CardContent>
       <CardFooter>
-        <Skeleton className="h-4 w-full" />
+        <div className="w-full">
+          <Skeleton className="h-4 w-full" />
+        </div>
       </CardFooter>
     </Card>
   );

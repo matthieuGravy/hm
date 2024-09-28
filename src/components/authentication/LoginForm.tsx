@@ -1,40 +1,23 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useStore, loginSchema } from "../../store/store";
+import { useEffect, useState, useMemo } from "react";
+import { useStore, loginSchema } from "@/store/store";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
+  Button,
+  Input,
+  Label,
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
+} from "@/components/ui";
 import { loadJsonData } from "@/utils/loadjsondata";
-import { ErrorComponent } from "../common";
-import { LoginFormSkeleton } from "./LoginFormSkeleton";
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
-const loginUser = async (userData: LoginData) => {
-  try {
-    const response = await axios.post(`${API_URL}/auth/login`, userData);
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data.message ||
-          "Une erreur est survenue lors de la connexion"
-      );
-    }
-    throw new Error("Une erreur inattendue est survenue");
-  }
-};
+import { ErrorComponent } from "@/components/common";
+import { LoginFormSkeleton } from "@/components/authentication";
+import { loginUser } from "@/api/auth";
 
 // type from Zod schema
 type LoginData = z.infer<typeof loginSchema>;

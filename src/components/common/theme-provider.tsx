@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { ThemeProviderContext } from "./theme-context";
-
-type Theme = "dark" | "light" | "system";
-
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
-};
+import { useEffect, useState } from "react";
+import { ThemeProviderContext } from "@/context/";
+import { ThemeProviderProps } from "@/types/common";
+import { Theme } from "@/types/context";
 
 export function ThemeProvider({
   children,

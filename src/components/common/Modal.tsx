@@ -1,13 +1,7 @@
-import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-interface ModalProps {
-  open: boolean;
-  onClose: () => void;
-  children: ReactNode;
-}
+import { Button } from "@/components/ui";
+import { ModalProps } from "@/types/common";
 
 export const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
   return (

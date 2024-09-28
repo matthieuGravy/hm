@@ -1,11 +1,8 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useStore, registerSchema } from "../../store/store";
+import { useEffect, useState, useMemo } from "react";
+import { useStore, registerSchema } from "@/store/store";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Card,
   CardHeader,
@@ -13,29 +10,14 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
+  Button,
+  Input,
+  Label,
+} from "@/components/ui";
 import { loadJsonData } from "@/utils/loadjsondata";
-import { ErrorComponent } from "../common";
-import { RegistrationFormSkeleton } from "./RegistrationFormSkeleton";
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
-const registerUser = async (userData: RegisterData) => {
-  try {
-    const response = await axios.post(`${API_URL}/auth/register (`, userData);
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data.message ||
-          "Une erreur est survenue lors de l'inscription"
-      );
-    }
-    throw new Error("Une erreur inattendue est survenue");
-  }
-};
-
+import { ErrorComponent } from "@/components/common";
+import { RegistrationFormSkeleton } from "@/components/authentication";
+import { registerUser } from "@/api/auth";
 // type from Zod schema
 type RegisterData = z.infer<typeof registerSchema>;
 
