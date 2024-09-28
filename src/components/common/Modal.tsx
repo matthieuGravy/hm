@@ -36,7 +36,7 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            <div className="px-6 pb-6">{children}</div>
+            <div className="grid place-content-center pb-6">{children}</div>
           </motion.div>
         </motion.div>
       )}
