@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useStore, loginSchema } from "@/store/store";
+import { useStore } from "@/store/store";
+import { loginSchema } from "@/schemas/auth";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";

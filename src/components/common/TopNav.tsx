@@ -12,7 +12,7 @@ import { Menu } from "lucide-react";
 import { ThemeToggle, Modal } from "@/components/common";
 import { LoginForm, RegistrationForm } from "@/components/authentication";
 
-export const Topbar = () => {
+export const TopNav = () => {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

@@ -1,10 +1,10 @@
 import { Outlet, ScrollRestoration } from "react-router-dom";
-import { Topbar } from "@/components/common/";
+import { TopNav } from "@/components/common/";
 
 function App() {
   return (
     <>
-      <Topbar />
+      <TopNav />
       <Outlet />
       <ScrollRestoration />
     </>
