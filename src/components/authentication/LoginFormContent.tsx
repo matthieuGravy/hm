@@ -75,8 +75,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
       const result = await loginUser(values);
       setLogin(result);
       setStatus({ success: "Connexion réussie" });
-      console.log("Connexion réussie:", result);
-      // Ici, vous pouvez ajouter une logique pour rediriger l'utilisateur ou mettre à jour l'UI
+      // Redirect ui here
     } catch (error) {
       if (error instanceof Error) {
         setErrors({ email: error.message });
