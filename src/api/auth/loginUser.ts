@@ -1,18 +1,46 @@
 import axios from "axios";
-import { API_URL } from "./api";
 import { LoginData } from "@/types/auth";
 
 export const loginUser = async (userData: LoginData) => {
+  const url = `https://backend-auth-beryl.vercel.app/auth/login`;
+  console.log("Attempting to log in user:", userData.email);
+  console.log("Login URL:", url);
   try {
-    const response = await axios.post(`${API_URL}/auth/login`, userData);
+    const response = await axios.post(url, userData);
+    console.log("Login response:", response.data);
     return response.data;
   } catch (error) {
+    console.error("Login error details:", error);
     if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data.message ||
-          "Une erreur est survenue lors de la connexion"
-      );
+      if (error.response) {
+        console.error(
+          "Server responded with:",
+          error.response.status,
+          error.response.data
+        );
+        if (error.response.status === 401) {
+          throw new Error(
+            "email adress or password is incorrect. Please try again."
+          );
+        } else if (error.response.status === 403) {
+          throw new Error(
+            "You do not have permission to access this resource."
+          );
+        } else {
+          throw new Error("An error occurred while logging in");
+        }
+      } else if (error.request) {
+        console.error("No response received from server");
+        throw new Error(
+          "An error occurred while attempting to log in. Please try again."
+        );
+      } else {
+        console.error("Error setting up the request:", error.message);
+        throw new Error("An unexpected error occurred while logging in");
+      }
     }
-    throw new Error("Une erreur inattendue est survenue");
+    throw new Error(
+      "An unexpected error occurred while attempting to log in. Please try again."
+    );
   }
 };
