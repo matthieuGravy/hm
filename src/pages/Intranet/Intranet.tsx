@@ -1,3 +1,9 @@
+import { LayoutIntranet } from "@/components/intranet/LayoutIntranet";
+
 export const Intranet = () => {
-  return <div>Intranet</div>;
+  return (
+    <LayoutIntranet>
+      <h1>Dashboard</h1>
+    </LayoutIntranet>
+  );
 };
