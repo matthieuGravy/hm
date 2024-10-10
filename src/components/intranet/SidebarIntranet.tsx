@@ -1,6 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Settings, Users, LayoutDashboard } from "lucide-react";
+import {
+  Settings,
+  Users,
+  LayoutDashboard,
+  MessageSquare,
+  Clipboard,
+  Briefcase,
+} from "lucide-react";
 import { Typography } from "@/components/common";
 import { NavLink } from "react-router-dom";
 
@@ -15,35 +21,72 @@ const SidebarIntranet = () => {
         </Avatar>
       </header>
       <nav className="flex-1 space-y-2">
-        <Button variant="ghost" size="sm" className="w-full justify-start">
+        <NavLink
+          to="./dashboard"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center w-full p-2 text-accent-foreground bg-accent-focus rounded"
+              : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
+          }
+        >
           <LayoutDashboard className="mr-2 h-4 w-4" />
-          <NavLink to="./dashboard">Dashboard</NavLink>
-        </Button>
-        <Button variant="ghost" size="sm" className="w-full justify-start">
+          Dashboard
+        </NavLink>
+        <NavLink
+          to="./messages"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center w-full p-2 text-accent-foreground bg-accent-focus rounded"
+              : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
+          }
+        >
+          <MessageSquare className="mr-2 h-4 w-4" />
+          Messages
+        </NavLink>
+        <NavLink
+          to="./tasks"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center w-full p-2 text-accent-foreground bg-accent-focus rounded"
+              : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
+          }
+        >
+          <Clipboard className="mr-2 h-4 w-4" />
+          Tasks
+        </NavLink>
+        <NavLink
+          to="./employees"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center w-full p-2 text-accent-foreground bg-accent-focus rounded"
+              : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
+          }
+        >
           <Users className="mr-2 h-4 w-4" />
-          <NavLink to="./employees">Employees</NavLink>
-        </Button>
-        <Button variant="ghost" size="sm" className="w-full justify-start">
-          <svg
-            className="mr-2 h-4 w-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3 9C3 7.89543 3.89543 7 5 7H9V5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H19C20.1046 7 21 7.89543 21 9V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V9Z"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <NavLink to="./projects">Projects</NavLink>
-        </Button>
-        <Button variant="ghost" size="sm" className="w-full justify-start">
+          Employees
+        </NavLink>
+        <NavLink
+          to="./projects"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center w-full p-2 text-accent-foreground bg-accent-focus rounded"
+              : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
+          }
+        >
+          <Briefcase className="mr-2 h-4 w-4" />
+          Projects
+        </NavLink>
+        <NavLink
+          to="./settings"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center w-full p-2 text-accent-foreground bg-accent-focus rounded"
+              : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
+          }
+        >
           <Settings className="mr-2 h-4 w-4" />
-          <NavLink to="./settings">Settings</NavLink>
-        </Button>
+          Settings
+        </NavLink>
       </nav>
     </aside>
   );
