@@ -21,13 +21,16 @@ export interface RegisterUIData {
   cardDescription: string;
   labelName: string;
   labelEmail: string;
-  labelPassword: string;
+  labelPassword1: string;
+  labelPassword2: string;
   buttonIsSubmitting: string;
   buttonSubmit: string;
   cardFooter: string;
   cardFooterLink: string;
 }
-
+export interface User {
+  email: string;
+}
 export interface RegistrationFormProps {
   onSwitchToLogin: () => void;
 }
