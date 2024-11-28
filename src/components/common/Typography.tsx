@@ -1,6 +1,11 @@
 import { cn } from "@/lib/utils";
 import { TypographyVariant, TypographyProps } from "@/types/common";
 
+// record est un type générique qui est utilisé pour représenter une collection d'éléments clés-valeurs de type T.
+// Le type Record<K, T> est un type générique qui représente un objet JavaScript standard avec des clés de type K et des valeurs de type T.
+// K est le type des clés et t le type des valeurs
+
+// objet qui mappe les variantes de typographie à des classes CSS
 const variantClasses: Record<TypographyVariant, string> = {
   h1: "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
   h2: "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0",
@@ -14,6 +19,7 @@ const variantClasses: Record<TypographyVariant, string> = {
     "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
 };
 
+// objet qui mappe les variantes de typographie à des éléments HTML
 const defaultElementMap: Record<
   TypographyVariant,
   keyof JSX.IntrinsicElements
@@ -29,6 +35,7 @@ const defaultElementMap: Record<
   label: "label",
 };
 
+// composant de typographie
 const Typography = ({
   as,
   variant,

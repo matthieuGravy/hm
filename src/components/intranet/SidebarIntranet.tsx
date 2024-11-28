@@ -21,6 +21,7 @@ const SidebarIntranet = () => {
         </Avatar>
       </header>
       <nav className="flex-1 space-y-2">
+        {/* Dashboard 
         <NavLink
           to="./dashboard"
           className={({ isActive }) =>
@@ -29,9 +30,11 @@ const SidebarIntranet = () => {
               : "flex items-center w-full p-2 text-accent-foreground hover:bg-accent-focus rounded"
           }
         >
+     
           <LayoutDashboard className="mr-2 h-4 w-4" />
           Dashboard
         </NavLink>
+             */}
         <NavLink
           to="./messages"
           className={({ isActive }) =>
@@ -43,6 +46,7 @@ const SidebarIntranet = () => {
           <MessageSquare className="mr-2 h-4 w-4" />
           Messages
         </NavLink>
+        {/* Reste
         <NavLink
           to="./tasks"
           className={({ isActive }) =>
@@ -87,6 +91,7 @@ const SidebarIntranet = () => {
           <Settings className="mr-2 h-4 w-4" />
           Settings
         </NavLink>
+         */}
       </nav>
     </aside>
   );

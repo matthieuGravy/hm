@@ -65,7 +65,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
     () => toFormikValidationSchema(registerSchema),
     []
   );
-
+  // [registerData] liste des variables qui doivent déclencher le recalcul de la valeur
   const memoizedRegisterData = useMemo(() => registerData, [registerData]);
 
   if (isLoading) return <RegistrationFormSkeleton />;

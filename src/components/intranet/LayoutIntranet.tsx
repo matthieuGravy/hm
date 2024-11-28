@@ -7,11 +7,10 @@ interface LayoutIntranetProps {
 
 const LayoutIntranet: React.FC<LayoutIntranetProps> = () => {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row max-w-6xl mx-auto">
       <SidebarIntranet />
-      <main className="flex-grow">
-        <Outlet />
-      </main>
+
+      <Outlet />
     </div>
   );
 };
