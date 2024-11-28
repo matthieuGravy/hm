@@ -4,6 +4,7 @@ import { registerSchema } from "@/schemas/auth";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -34,6 +35,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
   const [registerData, setRegisterData] = useState<RegisterUIData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,9 +80,11 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
   ) => {
     try {
       const result = await registerUser(values);
-      setRegister(result);
-      console.log("Inscription réussie:", result);
-      // Redirect to ??
+      if (result) {
+        setRegister(result);
+        console.log("Inscription réussie:", result);
+        navigate("/login");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setErrors({ email: error.message });

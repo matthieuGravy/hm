@@ -4,7 +4,7 @@ import { API_URL } from "@/config";
 
 export const registerUser = async (userData: RegisterData) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/register`, userData);
+    const response = await axios.post(`${API_URL}/auth/register/`, userData); // Mise à jour de l'URL
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -15,9 +15,13 @@ export const registerUser = async (userData: RegisterData) => {
           error.response.data
         );
         if (error.response.status === 400) {
-          throw new Error(
-            "Invalid registration data. Please check your information."
-          );
+          // Gestion spécifique des erreurs de validation Django
+          const errorMessage =
+            error.response.data?.email?.[0] ||
+            error.response.data?.password1?.[0] ||
+            error.response.data?.password2?.[0] ||
+            "Invalid registration data. Please check your information.";
+          throw new Error(errorMessage);
         } else if (error.response.status === 409) {
           throw new Error("A user with this email already exists.");
         } else {
