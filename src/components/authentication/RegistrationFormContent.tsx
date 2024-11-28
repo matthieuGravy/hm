@@ -54,9 +54,9 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
 
   const initialValues = useMemo<RegisterData>(
     () => ({
-      name: "",
       email: "",
-      password: "",
+      password1: "",
+      password2: "",
     }),
     []
   );
@@ -108,18 +108,6 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
           {({ errors, touched, isSubmitting }) => (
             <Form className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">{memoizedRegisterData.labelName}</Label>
-                <Field name="name">
-                  {({ field }: FieldProps) => (
-                    <Input id="name" placeholder="John Doe" {...field} />
-                  )}
-                </Field>
-                {errors.name && touched.name && (
-                  <div className="text-red-500 text-sm">{errors.name}</div>
-                )}
-              </div>
-
-              <div className="space-y-2">
                 <Label htmlFor="email">{memoizedRegisterData.labelEmail}</Label>
                 <Field name="email">
                   {({ field }: FieldProps) => (
@@ -137,16 +125,29 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">
-                  {memoizedRegisterData.labelPassword}
+                <Label htmlFor="password1">
+                  {memoizedRegisterData.labelPassword1}
                 </Label>
-                <Field name="password">
+                <Field name="password1">
                   {({ field }: FieldProps) => (
-                    <Input id="password" type="password" {...field} />
+                    <Input id="password1" type="password" {...field} />
                   )}
                 </Field>
-                {errors.password && touched.password && (
-                  <div className="text-red-500 text-sm">{errors.password}</div>
+                {errors.password1 && touched.password1 && (
+                  <div className="text-red-500 text-sm">{errors.password1}</div>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password2">
+                  {memoizedRegisterData.labelPassword2}
+                </Label>
+                <Field name="password2">
+                  {({ field }: FieldProps) => (
+                    <Input id="password2" type="password" {...field} />
+                  )}
+                </Field>
+                {errors.password2 && touched.password2 && (
+                  <div className="text-red-500 text-sm">{errors.password2}</div>
                 )}
               </div>
 

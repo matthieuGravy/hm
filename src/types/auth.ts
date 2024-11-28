@@ -6,9 +6,9 @@ export interface LoginData {
   password: string;
 }
 export interface RegisterData {
-  name: string;
   email: string;
-  password: string;
+  password1: string;
+  password2: string;
 }
 
 export type Register = z.infer<typeof registerSchema>;

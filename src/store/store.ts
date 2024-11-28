@@ -11,16 +11,32 @@ interface AuthStore {
   logout: () => void;
 }
 
+const initialUser: Register = {
+  email: "",
+  password1: "",
+  password2: "",
+};
+
 export const useStore = create<AuthStore>()(
   devtools(
     persist(
       (set) => ({
-        user: null,
+        user: initialUser,
         isAuthenticated: false,
         setRegister: (register) =>
-          set({ user: register, isAuthenticated: true }),
+          set({
+            user: register,
+            isAuthenticated: true,
+          }),
         setLogin: (login) =>
-          set({ user: { ...login, name: "" }, isAuthenticated: true }),
+          set({
+            user: {
+              email: login.email,
+              password1: login.password,
+              password2: login.password,
+            },
+            isAuthenticated: true,
+          }),
         logout: () => set({ user: null, isAuthenticated: false }),
       }),
       {
