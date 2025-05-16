@@ -1,19 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import axios from "axios";
+import { API_URL } from "@/config";
 import { registerUser } from "@/api/auth/registerUser";
 import { RegisterData } from "@/types/auth";
 
 vi.mock("@/config", () => ({
-  API_URL: "http://api.test",
+  API_URL: import.meta.env.VITE_API_URL,
 }));
-
-import { API_URL } from "@/config";
 
 vi.mock("axios");
 
 describe("registerUser", () => {
   const mockUserData: RegisterData = {
-    email: "test@example.com",
+    username: "test_user",
+    email: "test_user@example.com",
     password1: "password123",
     password2: "password123",
   };
@@ -31,7 +31,7 @@ describe("registerUser", () => {
     const result = await registerUser(mockUserData);
 
     expect(axios.post).toHaveBeenCalledWith(
-      `${API_URL}/auth/register`,
+      `${API_URL}/auth/registration`,
       mockUserData
     );
     expect(result).toEqual(mockResponse.data);
