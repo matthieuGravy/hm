@@ -22,6 +22,7 @@ import { loginUser } from "@/api/auth";
 import { LoginUIData, LoginFormContentProps } from "@/types/authentication";
 import { useStore } from "@/store/store";
 import { loginSchema } from "@/schemas/auth";
+import { FormLink } from "@/components/authentication/FormLink";
 
 type LoginData = z.infer<typeof loginSchema>;
 
@@ -154,18 +155,11 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
       <CardFooter>
         <p className="text-sm text-center w-full">
           {memoizedLoginData.cardFooter}{" "}
-          {onSwitchToSignUp && (
-            <a
-              href="#"
-              className="text-blue-500"
-              onClick={(e) => {
-                e.preventDefault();
-                onSwitchToSignUp();
-              }}
-            >
-              {memoizedLoginData.cardFooterLink}
-            </a>
-          )}
+          <FormLink
+            type="loginModal"
+            text={memoizedLoginData.cardFooterLink}
+            onSwitchToSignUp={onSwitchToSignUp}
+          />
         </p>
       </CardFooter>
     </Card>

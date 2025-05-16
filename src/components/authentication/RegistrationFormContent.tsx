@@ -20,6 +20,7 @@ import { loadJsonData } from "@/utils/loadjsondata";
 import { ErrorComponent } from "@/components/common";
 import { RegistrationFormSkeleton } from "@/components/authentication";
 import { registerUser } from "@/api/auth";
+import { FormLink } from "@/components/authentication/FormLink";
 import {
   RegisterUIData,
   RegistrationFormContentProps,
@@ -168,18 +169,11 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
       <CardFooter>
         <p className="text-sm text-center w-full">
           {memoizedRegisterData.cardFooter}{" "}
-          {onSwitchToLogin && (
-            <a
-              href="#"
-              className="text-blue-500"
-              onClick={(e) => {
-                e.preventDefault();
-                onSwitchToLogin();
-              }}
-            >
-              {memoizedRegisterData.cardFooterLink}
-            </a>
-          )}
+          <FormLink
+            type="signupModal"
+            text={memoizedRegisterData.cardFooterLink}
+            onSwitchToLogin={onSwitchToLogin}
+          />
         </p>
       </CardFooter>
     </Card>
