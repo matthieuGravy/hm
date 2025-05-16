@@ -53,6 +53,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
 
   const initialValues = useMemo<LoginData>(
     () => ({
+      username: "",
       email: "",
       password: "",
     }),

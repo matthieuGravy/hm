@@ -2,11 +2,12 @@ import { z } from "zod";
 import { registerSchema, loginSchema } from "@/schemas/auth";
 
 export interface LoginData {
+  username?: string;
   email: string;
   password: string;
 }
 export interface RegisterData {
-  username?: string;
+  username: string;
   email: string;
   password1: string;
   password2: string;
