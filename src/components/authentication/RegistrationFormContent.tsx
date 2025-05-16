@@ -134,7 +134,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
                 <Label htmlFor="password1">
                   {memoizedRegisterData.labelPassword}
                 </Label>
-                <Field name="password">
+                <Field name="password1">
                   {({ field }: FieldProps) => (
                     <Input id="password1" type="password" {...field} />
                   )}
