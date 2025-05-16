@@ -1,8 +1,9 @@
 import axios from "axios";
 import { LoginData } from "@/types/auth";
+import { API_URL } from "@/config";
 
 export const loginUser = async (userData: LoginData) => {
-  const url = `https://backend-auth-beryl.vercel.app/auth/login`;
+  const url = `${API_URL}/api/auth/login`;
   console.log("Attempting to log in user:", userData.email);
   console.log("Login URL:", url);
   try {

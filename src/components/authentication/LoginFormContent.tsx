@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useStore } from "@/store/store";
-import { loginSchema } from "@/schemas/auth";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   Input,
@@ -20,6 +20,9 @@ import { ErrorComponent } from "@/components/common";
 import { LoginFormSkeleton } from "@/components/authentication";
 import { loginUser } from "@/api/auth";
 import { LoginUIData, LoginFormContentProps } from "@/types/authentication";
+import { useStore } from "@/store/store";
+import { loginSchema } from "@/schemas/auth";
+import { FormLink } from "@/components/authentication/FormLink";
 
 type LoginData = z.infer<typeof loginSchema>;
 
@@ -30,7 +33,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   const [loginData, setLoginData] = useState<LoginUIData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,6 +78,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
       const result = await loginUser(values);
       setLogin(result);
       setStatus({ success: "Connexion réussie" });
+      navigate("/");
       // Redirect ui here
     } catch (error) {
       if (error instanceof Error) {
@@ -147,21 +151,15 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
           )}
         </Formik>
       </CardContent>
+
       <CardFooter>
         <p className="text-sm text-center w-full">
           {memoizedLoginData.cardFooter}{" "}
-          {onSwitchToSignUp && (
-            <a
-              href="#"
-              className="text-blue-500"
-              onClick={(e) => {
-                e.preventDefault();
-                onSwitchToSignUp();
-              }}
-            >
-              {memoizedLoginData.cardFooterLink}
-            </a>
-          )}
+          <FormLink
+            type="loginModal"
+            text={memoizedLoginData.cardFooterLink}
+            onSwitchToSignUp={onSwitchToSignUp}
+          />
         </p>
       </CardFooter>
     </Card>

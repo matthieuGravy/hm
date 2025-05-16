@@ -4,7 +4,10 @@ import { API_URL } from "@/config";
 
 export const registerUser = async (userData: RegisterData) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/register/`, userData); // Mise à jour de l'URL
+    const response = await axios.post(
+      `${API_URL}/api/auth/registration/`,
+      userData
+    ); // Mise à jour de l'URL
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

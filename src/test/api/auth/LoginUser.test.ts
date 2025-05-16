@@ -1,13 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { API_URL } from "@/config";
 import axios from "axios";
 import { loginUser } from "@/api/auth/loginUser";
 import { LoginData } from "@/types/auth";
 
+vi.mock("@/config", () => ({
+  API_URL: import.meta.env.VITE_API_URL,
+}));
 vi.mock("axios");
-
 describe("loginUser", () => {
   const mockUserData: LoginData = {
-    email: "test@example.com",
+    email: "test_user@example.com",
     password: "password123",
   };
 
@@ -24,7 +27,7 @@ describe("loginUser", () => {
     const result = await loginUser(mockUserData);
 
     expect(axios.post).toHaveBeenCalledWith(
-      "https://backend-auth-beryl.vercel.app/auth/login",
+      `${API_URL}/auth/login`,
       mockUserData
     );
     expect(result).toEqual(mockResponse.data);

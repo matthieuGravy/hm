@@ -21,8 +21,8 @@ export interface RegisterUIData {
   cardDescription: string;
   labelName: string;
   labelEmail: string;
-  labelPassword1: string;
-  labelPassword2: string;
+  labelPassword: string;
+  labelConfirmPassword: string;
   buttonIsSubmitting: string;
   buttonSubmit: string;
   cardFooter: string;

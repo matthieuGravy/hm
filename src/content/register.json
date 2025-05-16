@@ -1,13 +1,14 @@
 {
-    "register": {
-      "cardTitle": "Create your account",
-      "cardDescription": "Fill in the form below to create your account",
-        "labelName": "Name",
-        "labelEmail": "Email",
-        "labelPassword": "Password",
-        "buttonIsSubimitting": "Creating account...",
-        "buttonSubmit": "Create account",
-        "cardFooter": "Already have an account?",
-        "cardFooterLink": "Login"
-    }
+  "register": {
+    "cardTitle": "Create your account",
+    "cardDescription": "Fill in the form below to create your account",
+    "labelName": "Name",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "labelConfirmPassword": "Confirm password",
+    "buttonIsSubimitting": "Creating account...",
+    "buttonSubmit": "Create account",
+    "cardFooter": "Already have an account?",
+    "cardFooterLink": "Login"
+  }
 }

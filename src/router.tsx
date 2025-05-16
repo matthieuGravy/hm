@@ -14,6 +14,7 @@ import {
   Intranet,
   Privacy,
   Mentions,
+  Login,
 } from "./pages";
 
 import App from "./App";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "login",
+        element: <Login />,
       },
       {
         path: "contact",
