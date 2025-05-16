@@ -150,6 +150,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
           )}
         </Formik>
       </CardContent>
+
       <CardFooter>
         <p className="text-sm text-center w-full">
           {memoizedLoginData.cardFooter}{" "}
