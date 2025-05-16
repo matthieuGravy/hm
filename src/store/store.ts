@@ -12,6 +12,7 @@ interface AuthStore {
 }
 
 const initialUser: Register = {
+  username: "",
   email: "",
   password1: "",
   password2: "",
@@ -31,6 +32,7 @@ export const useStore = create<AuthStore>()(
         setLogin: (login) =>
           set({
             user: {
+              username: login.username || login.email,
               email: login.email,
               password1: login.password,
               password2: login.password,

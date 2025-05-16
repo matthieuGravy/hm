@@ -81,6 +81,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
     { setSubmitting, setErrors }: FormikHelpers<RegisterData>
   ) => {
     try {
+      console.log("Submitting values:", values); // Debug log
       const result = await registerUser(values);
       if (result) {
         setRegister(result);
@@ -114,6 +115,25 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
           {({ errors, touched, isSubmitting }) => (
             <Form className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="username">
+                  {memoizedRegisterData.labelName}
+                </Label>
+                <Field name="username">
+                  {({ field }: FieldProps) => (
+                    <Input
+                      id="username"
+                      type="text"
+                      placeholder="John Doe"
+                      {...field}
+                    />
+                  )}
+                </Field>
+                {errors.username && touched.username && (
+                  <div className="text-red-500 text-sm">{errors.username}</div>
+                )}
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="email">{memoizedRegisterData.labelEmail}</Label>
                 <Field name="email">
                   {({ field }: FieldProps) => (
@@ -134,7 +154,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
                 <Label htmlFor="password1">
                   {memoizedRegisterData.labelPassword}
                 </Label>
-                <Field name="password">
+                <Field name="password1">
                   {({ field }: FieldProps) => (
                     <Input id="password1" type="password" {...field} />
                   )}
@@ -143,6 +163,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
                   <div className="text-red-500 text-sm">{errors.password1}</div>
                 )}
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="password2">
                   {memoizedRegisterData.labelConfirmPassword}
