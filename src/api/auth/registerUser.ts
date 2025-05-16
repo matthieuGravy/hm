@@ -6,7 +6,7 @@ export const registerUser = async (userData: RegisterData) => {
   try {
     console.log("Sending registration data:", userData); // Debug log
     const response = await axios.post(
-      `${API_URL}/api/auth/registration/`,
+      `${API_URL}/auth/registration/`,
       userData
     );
     console.log("Registration response:", response.data); // Debug log
