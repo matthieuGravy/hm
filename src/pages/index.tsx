@@ -11,3 +11,4 @@ export { Settings } from "./Intranet/Settings/Settings";
 export { Dashboard } from "./Intranet/Dashboard/Dashboard";
 export { Messages } from "./Intranet/Messages/Messages";
 export { Tasks } from "./Intranet/Tasks/Tasks";
+export { Login } from "./Authentification/login";

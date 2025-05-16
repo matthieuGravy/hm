@@ -56,6 +56,7 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
 
   const initialValues = useMemo<RegisterData>(
     () => ({
+      username: "",
       email: "",
       password1: "",
       password2: "",
