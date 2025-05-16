@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useStore } from "@/store/store";
-import { loginSchema } from "@/schemas/auth";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   Input,
@@ -20,6 +20,8 @@ import { ErrorComponent } from "@/components/common";
 import { LoginFormSkeleton } from "@/components/authentication";
 import { loginUser } from "@/api/auth";
 import { LoginUIData, LoginFormContentProps } from "@/types/authentication";
+import { useStore } from "@/store/store";
+import { loginSchema } from "@/schemas/auth";
 
 type LoginData = z.infer<typeof loginSchema>;
 
@@ -30,7 +32,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   const [loginData, setLoginData] = useState<LoginUIData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,6 +77,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
       const result = await loginUser(values);
       setLogin(result);
       setStatus({ success: "Connexion réussie" });
+      navigate("/");
       // Redirect ui here
     } catch (error) {
       if (error instanceof Error) {
