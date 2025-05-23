@@ -17,6 +17,9 @@ import {
   Login,
 } from "./pages";
 
+// Import your new ChatPage
+import ChatPage from "./pages/ChatPage";
+
 import App from "./App";
 
 export const router = createBrowserRouter([
@@ -63,6 +66,7 @@ export const router = createBrowserRouter([
           },
           { path: "messages", element: <Messages /> },
           { path: "tasks", element: <Tasks /> },
+          { path: "chat-test", element: <ChatPage /> }, // New ChatPage route
         ],
       },
       {
