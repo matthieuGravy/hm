@@ -22,6 +22,7 @@ import { LoginFormContentProps } from "@/types/authentication";
 import { useAuthStore } from "@/stores/authStore";
 import { loginSchema } from "@/schemas/auth";
 import { FormLink } from "@/components/authentication/FormLink";
+import { useModalStore } from "@/stores/modalStore";
 
 type LoginData = z.infer<typeof loginSchema>;
 
@@ -31,7 +32,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   const setLogin = useAuthStore((state) => state.setLogin);
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const { closeModal } = useModalStore();
   const initialValues = useMemo<LoginData>(
     () => ({
       email: "",
@@ -54,6 +55,7 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
       setLogin(result);
       setStatus({ success: t("login.successMessage") });
       navigate("/");
+      closeModal();
     } catch (error) {
       if (error instanceof Error) {
         setErrors({ email: error.message });
