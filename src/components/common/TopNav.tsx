@@ -9,13 +9,13 @@ import {
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
-import { ThemeToggle, Modal } from "@/components/common";
+import { ThemeToggle, Modal, LanguageToggle } from "@/components/common";
 import { LoginForm, RegistrationForm } from "@/components/authentication";
+import { useModalStore } from "@/stores/modalStore";
 
 export const TopNav = () => {
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { openModal } = useModalStore();
 
   const links = [
     { path: "/contact", title: "Contact" },
@@ -24,18 +24,12 @@ export const TopNav = () => {
   ];
 
   const openSignUpModal = () => {
-    setIsLoginModalOpen(false);
-    setIsSignUpModalOpen(true);
+    openModal("signup");
   };
-
-  const closeSignUpModal = () => setIsSignUpModalOpen(false);
 
   const openLoginModal = () => {
-    setIsSignUpModalOpen(false);
-    setIsLoginModalOpen(true);
+    openModal("login");
   };
-
-  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -79,6 +73,7 @@ export const TopNav = () => {
             </Button>
             <Button onClick={openSignUpModal}>Sign Up</Button>
             <ThemeToggle />
+            <LanguageToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -138,10 +133,10 @@ export const TopNav = () => {
         )}
       </header>
 
-      <Modal open={isSignUpModalOpen} onClose={closeSignUpModal}>
+      <Modal type="signup">
         <RegistrationForm onSwitchToLogin={openLoginModal} />
       </Modal>
-      <Modal open={isLoginModalOpen} onClose={closeLoginModal}>
+      <Modal type="login">
         <LoginForm onSwitchToSignUp={openSignUpModal} />
       </Modal>
     </>

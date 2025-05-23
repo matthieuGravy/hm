@@ -1,10 +1,10 @@
-import { useEffect, useState, useMemo } from "react";
-import { useStore } from "@/store/store";
+import { useMemo } from "react";
+import { useAuthStore } from "@/stores/authStore";
+import { useTranslation } from "react-i18next";
 import { registerSchema } from "@/schemas/auth";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -16,15 +16,9 @@ import {
   Input,
   Label,
 } from "@/components/ui";
-import { loadJsonData } from "@/utils/loadjsondata";
-import { ErrorComponent } from "@/components/common";
-import { RegistrationFormSkeleton } from "@/components/authentication";
 import { registerUser } from "@/api/auth";
 import { FormLink } from "@/components/authentication/FormLink";
-import {
-  RegisterUIData,
-  RegistrationFormContentProps,
-} from "@/types/authentication";
+import { RegistrationFormContentProps } from "@/types/authentication";
 
 // type from Zod schema
 type RegisterData = z.infer<typeof registerSchema>;
@@ -32,28 +26,11 @@ type RegisterData = z.infer<typeof registerSchema>;
 const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
   onSwitchToLogin,
 }) => {
-  const setRegister = useStore((state) => state.setRegister);
-  const [registerData, setRegisterData] = useState<RegisterUIData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await loadJsonData("register.json");
-        setRegisterData(data.register as RegisterUIData);
-        setIsLoading(false);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { t } = useTranslation();
+  const setRegister = useAuthStore((state) => state.setRegister);
+  const setRegistrationSuccess = useAuthStore(
+    (state) => state.setRegistrationSuccess
+  );
 
   const initialValues = useMemo<RegisterData>(
     () => ({
@@ -68,30 +45,37 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
     () => toFormikValidationSchema(registerSchema),
     []
   );
-  // [registerData] liste des variables qui doivent déclencher le recalcul de la valeur
-  const memoizedRegisterData = useMemo(() => registerData, [registerData]);
-
-  if (isLoading) return <RegistrationFormSkeleton />;
-  if (error) return <ErrorComponent message={error} />;
-  if (!memoizedRegisterData) return null;
 
   const handleSubmit = async (
     values: RegisterData,
-    { setSubmitting, setErrors }: FormikHelpers<RegisterData>
+    { setSubmitting, setErrors, setStatus }: FormikHelpers<RegisterData>
   ) => {
     try {
-      console.log("Submitting values:", values); // Debug log
+      console.log("1. Starting form submission");
       const result = await registerUser(values);
-      if (result) {
-        setRegister(result);
-        console.log("Inscription réussie:", result);
-        navigate("/login");
+      console.log("2. Registration result:", result);
+
+      if (result && result.success) {
+        console.log("3. Registration successful");
+        setRegister({
+          email: values.email,
+          password1: values.password1,
+          password2: values.password2,
+        });
+        console.log("4. Register state updated");
+        setRegistrationSuccess(true);
+        console.log("5. Success state set to true");
+        setStatus({ success: t("register.successMessage") });
+      } else {
+        console.log("3. Unexpected response format:", result);
+        setStatus({ error: t("register.errorGeneral") });
       }
     } catch (error) {
+      console.error("Error in handleSubmit:", error);
       if (error instanceof Error) {
         setErrors({ email: error.message });
+        setStatus({ error: t("register.errorGeneral") });
       }
-      console.error("Erreur d'inscription:", error);
     } finally {
       setSubmitting(false);
     }
@@ -100,10 +84,8 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>{memoizedRegisterData.cardTitle}</CardTitle>
-        <CardDescription>
-          {memoizedRegisterData.cardDescription}
-        </CardDescription>
+        <CardTitle>{t("register.cardTitle")}</CardTitle>
+        <CardDescription>{t("register.cardDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <Formik
@@ -111,16 +93,22 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ errors, touched, isSubmitting }) => (
+          {({ errors, touched, isSubmitting, status }) => (
             <Form className="space-y-4">
+              {status && status.error && (
+                <div className="text-red-500 text-sm">{status.error}</div>
+              )}
+              {status && status.success && (
+                <div className="text-green-500 text-sm">{status.success}</div>
+              )}
               <div className="space-y-2">
-                <Label htmlFor="email">{memoizedRegisterData.labelEmail}</Label>
+                <Label htmlFor="email">{t("register.labelEmail")}</Label>
                 <Field name="email">
                   {({ field }: FieldProps) => (
                     <Input
                       id="email"
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder={t("register.emailPlaceholder")}
                       {...field}
                     />
                   )}
@@ -131,12 +119,15 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password1">
-                  {memoizedRegisterData.labelPassword}
-                </Label>
+                <Label htmlFor="password1">{t("register.labelPassword")}</Label>
                 <Field name="password1">
                   {({ field }: FieldProps) => (
-                    <Input id="password1" type="password" {...field} />
+                    <Input
+                      id="password1"
+                      type="password"
+                      placeholder={t("register.passwordPlaceholder")}
+                      {...field}
+                    />
                   )}
                 </Field>
                 {errors.password1 && touched.password1 && (
@@ -146,11 +137,16 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
 
               <div className="space-y-2">
                 <Label htmlFor="password2">
-                  {memoizedRegisterData.labelConfirmPassword}
+                  {t("register.labelConfirmPassword")}
                 </Label>
                 <Field name="password2">
                   {({ field }: FieldProps) => (
-                    <Input id="password2" type="password" {...field} />
+                    <Input
+                      id="password2"
+                      type="password"
+                      placeholder={t("register.confirmPasswordPlaceholder")}
+                      {...field}
+                    />
                   )}
                 </Field>
                 {errors.password2 && touched.password2 && (
@@ -160,8 +156,8 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting
-                  ? memoizedRegisterData.buttonIsSubmitting
-                  : memoizedRegisterData.buttonSubmit}
+                  ? t("register.buttonIsSubmitting")
+                  : t("register.buttonSubmit")}
               </Button>
             </Form>
           )}
@@ -169,10 +165,10 @@ const RegistrationFormContent: React.FC<RegistrationFormContentProps> = ({
       </CardContent>
       <CardFooter>
         <p className="text-sm text-center w-full">
-          {memoizedRegisterData.cardFooter}{" "}
+          {t("register.cardFooter")}{" "}
           <FormLink
             type="signupModal"
-            text={memoizedRegisterData.cardFooterLink}
+            text={t("register.cardFooterLink")}
             onSwitchToLogin={onSwitchToLogin}
           />
         </p>
