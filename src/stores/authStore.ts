@@ -2,13 +2,14 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { Register, Login } from "@/types/auth";
 
-// Define the store
 interface AuthStore {
   user: Register | null;
   isAuthenticated: boolean;
+  isRegistrationSuccess: boolean;
   setRegister: (register: Register) => void;
   setLogin: (login: Login) => void;
   logout: () => void;
+  setRegistrationSuccess: (value: boolean) => void;
 }
 
 const initialUser: Register = {
@@ -17,12 +18,13 @@ const initialUser: Register = {
   password2: "",
 };
 
-export const useStore = create<AuthStore>()(
+export const useAuthStore = create<AuthStore>()(
   devtools(
     persist(
       (set) => ({
         user: initialUser,
         isAuthenticated: false,
+        isRegistrationSuccess: false,
         setRegister: (register) =>
           set({
             user: register,
@@ -38,6 +40,8 @@ export const useStore = create<AuthStore>()(
             isAuthenticated: true,
           }),
         logout: () => set({ user: null, isAuthenticated: false }),
+        setRegistrationSuccess: (value) =>
+          set({ isRegistrationSuccess: value }),
       }),
       {
         name: "auth-store",

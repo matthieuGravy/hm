@@ -1,0 +1,49 @@
+{
+  "home": {
+    "jumbotron": {
+      "title": "Bienvenue chez HM",
+      "content": "Découvrez nos projets d'apprentissage",
+      "buttonPrimary": "En savoir plus",
+      "buttonSecondary": "Nous contacter"
+    }
+  },
+  "login": {
+    "cardTitle": "Connexion",
+    "cardDescription": "Entrez vos identifiants pour accéder à votre compte",
+    "labelEmail": "Email",
+    "labelPassword": "Mot de passe",
+    "buttonIsSubmitting": "Connexion en cours...",
+    "buttonSubmit": "Se connecter",
+    "cardFooter": "Vous n'avez pas de compte ?",
+    "cardFooterLink": "S'inscrire",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "errorInvalidCredentials": "Email ou mot de passe invalide",
+    "errorGeneral": "Une erreur est survenue. Veuillez réessayer.",
+    "successMessage": "Connexion réussie"
+  },
+  "register": {
+    "cardTitle": "Créez votre compte",
+    "cardDescription": "Remplissez le formulaire ci-dessous pour créer votre compte",
+    "labelName": "Nom d'utilisateur",
+    "labelEmail": "Email",
+    "labelPassword": "Mot de passe",
+    "labelConfirmPassword": "Confirmez le mot de passe",
+    "buttonIsSubmitting": "Création du compte...",
+    "buttonSubmit": "Créer le compte",
+    "cardFooter": "Vous avez déjà un compte ?",
+    "cardFooterLink": "Se connecter",
+    "emailPlaceholder": "vous@exemple.com",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "successMessage": "Compte créé avec succès",
+    "errorGeneral": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "registrationSuccess": {
+    "cardTitle": "Inscription réussie !",
+    "cardDescription": "Votre compte a été créé avec succès. Vous devez valider votre compte via votre adresse e-mail (vérifiez vos spams si vous n'avez pas reçu l'e-mail).",
+    "buttonSubmit": "Valider mon compte"
+  }
+}

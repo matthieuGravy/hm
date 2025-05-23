@@ -1,9 +1,18 @@
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "@/context/";
 import { Button } from "@/components/ui";
+import { useThemeStore } from "@/stores/themeStore";
+import { useEffect } from "react";
 
-export function ThemeToggle() {
-  const { setTheme, theme } = useTheme();
+export const ThemeToggle = () => {
+  const { theme, setTheme } = useThemeStore();
+
+  // Initialiser le thème au montage du composant
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("vite-ui-theme");
+    if (!storedTheme) {
+      setTheme("system");
+    }
+  }, []);
 
   return (
     <Button
@@ -16,4 +25,4 @@ export function ThemeToggle() {
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
-}
+};

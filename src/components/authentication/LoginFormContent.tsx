@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Formik, Form, Field, FieldProps, FormikHelpers } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   Button,
@@ -15,12 +16,10 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui";
-import { loadJsonData } from "@/utils/loadjsondata";
-import { ErrorComponent } from "@/components/common";
-import { LoginFormSkeleton } from "@/components/authentication";
+
 import { loginUser } from "@/api/auth";
-import { LoginUIData, LoginFormContentProps } from "@/types/authentication";
-import { useStore } from "@/store/store";
+import { LoginFormContentProps } from "@/types/authentication";
+import { useAuthStore } from "@/stores/authStore";
 import { loginSchema } from "@/schemas/auth";
 import { FormLink } from "@/components/authentication/FormLink";
 
@@ -29,31 +28,12 @@ type LoginData = z.infer<typeof loginSchema>;
 const LoginFormContent: React.FC<LoginFormContentProps> = ({
   onSwitchToSignUp,
 }) => {
-  const setLogin = useStore((state) => state.setLogin);
-  const [loginData, setLoginData] = useState<LoginUIData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const setLogin = useAuthStore((state) => state.setLogin);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await loadJsonData("login.json");
-        setLoginData(data.login as LoginUIData);
-        setIsLoading(false);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { t } = useTranslation();
 
   const initialValues = useMemo<LoginData>(
     () => ({
-      username: "",
       email: "",
       password: "",
     }),
@@ -65,12 +45,6 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
     []
   );
 
-  const memoizedLoginData = useMemo(() => loginData, [loginData]);
-
-  if (isLoading) return <LoginFormSkeleton />;
-  if (error) return <ErrorComponent message={error} />;
-  if (!memoizedLoginData) return null;
-
   const handleSubmit = async (
     values: LoginData,
     { setSubmitting, setErrors, setStatus }: FormikHelpers<LoginData>
@@ -78,15 +52,13 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
     try {
       const result = await loginUser(values);
       setLogin(result);
-      setStatus({ success: "Connexion réussie" });
+      setStatus({ success: t("login.successMessage") });
       navigate("/");
-      // Redirect ui here
     } catch (error) {
       if (error instanceof Error) {
         setErrors({ email: error.message });
-        setStatus({ error: "Échec de la connexion" });
+        setStatus({ error: t("login.errorGeneral") });
       }
-      console.error("Erreur de connexion:", error);
     } finally {
       setSubmitting(false);
     }
@@ -95,8 +67,8 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>{memoizedLoginData.cardTitle}</CardTitle>
-        <CardDescription>{memoizedLoginData.cardDescription}</CardDescription>
+        <CardTitle>{t("login.cardTitle")}</CardTitle>
+        <CardDescription>{t("login.cardDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <Formik
@@ -113,13 +85,13 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
                 <div className="text-green-500 text-sm">{status.success}</div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="email">{memoizedLoginData.labelEmail}</Label>
+                <Label htmlFor="email">{t("login.labelEmail")}</Label>
                 <Field name="email">
                   {({ field }: FieldProps) => (
                     <Input
                       id="email"
                       type="email"
-                      placeholder="john@example.com"
+                      placeholder={t("login.emailPlaceholder")}
                       {...field}
                     />
                   )}
@@ -130,12 +102,15 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">
-                  {memoizedLoginData.labelPassword}
-                </Label>
+                <Label htmlFor="password">{t("login.labelPassword")}</Label>
                 <Field name="password">
                   {({ field }: FieldProps) => (
-                    <Input id="password" type="password" {...field} />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder={t("login.passwordPlaceholder")}
+                      {...field}
+                    />
                   )}
                 </Field>
                 {errors.password && touched.password && (
@@ -145,8 +120,8 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting
-                  ? memoizedLoginData.buttonIsSubmitting
-                  : memoizedLoginData.buttonSubmit}
+                  ? t("login.buttonIsSubmitting")
+                  : t("login.buttonSubmit")}
               </Button>
             </Form>
           )}
@@ -155,10 +130,10 @@ const LoginFormContent: React.FC<LoginFormContentProps> = ({
 
       <CardFooter>
         <p className="text-sm text-center w-full">
-          {memoizedLoginData.cardFooter}{" "}
+          {t("login.cardFooter")}{" "}
           <FormLink
             type="loginModal"
-            text={memoizedLoginData.cardFooterLink}
+            text={t("login.cardFooterLink")}
             onSwitchToSignUp={onSwitchToSignUp}
           />
         </p>
