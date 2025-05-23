@@ -2,7 +2,7 @@
   "register": {
     "cardTitle": "Create your account",
     "cardDescription": "Fill in the form below to create your account",
-    "labelName": "Name",
+    "labelName": "Username",
     "labelEmail": "Email",
     "labelPassword": "Password",
     "labelConfirmPassword": "Confirm password",

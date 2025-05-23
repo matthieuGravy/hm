@@ -22,7 +22,6 @@ export const registerUser = async (userData: RegisterData) => {
         if (error.response.status === 400) {
           // Gestion spécifique des erreurs de validation Django
           const errorMessage =
-            error.response.data?.username?.[0] || // Ajout de la gestion des erreurs username
             error.response.data?.email?.[0] ||
             error.response.data?.password1?.[0] ||
             error.response.data?.password2?.[0] ||
