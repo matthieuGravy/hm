@@ -12,7 +12,6 @@ vi.mock("axios");
 
 describe("registerUser", () => {
   const mockUserData: RegisterData = {
-    username: "test_user",
     email: "test_user@example.com",
     password1: "password123",
     password2: "password123",
