@@ -5,3 +5,4 @@ export { ThemeToggle } from "./ThemeToggle";
 export { Typography } from "./Typography";
 export { TopNav } from "./TopNav";
 export { Modal } from "./Modal";
+export { LanguageToggle } from "./LanguageToggle";

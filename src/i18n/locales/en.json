@@ -1,0 +1,49 @@
+{
+  "home": {
+    "jumbotron": {
+      "title": "Welcome to HM",
+      "content": "Discover our learnigns projects",
+      "buttonPrimary": "Discover More",
+      "buttonSecondary": "Contact Us"
+    }
+  },
+  "login": {
+    "cardTitle": "Login",
+    "cardDescription": "Enter your credentials to access your account",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "buttonIsSubmitting": "Logging in...",
+    "buttonSubmit": "Log In",
+    "cardFooter": "Don't have an account?",
+    "cardFooterLink": "Sign up",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "errorInvalidCredentials": "Invalid email or password",
+    "errorGeneral": "An error occurred. Please try again.",
+    "successMessage": "Login successful"
+  },
+  "register": {
+    "cardTitle": "Create your account",
+    "cardDescription": "Fill in the form below to create your account",
+    "labelName": "Username",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "labelConfirmPassword": "Confirm password",
+    "buttonIsSubmitting": "Creating account...",
+    "buttonSubmit": "Create account",
+    "cardFooter": "Already have an account?",
+    "cardFooterLink": "Login",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "successMessage": "Account created successfully",
+    "errorGeneral": "An error occurred. Please try again."
+  },
+  "registrationSuccess": {
+    "cardTitle": "Inscription réussie !",
+    "cardDescription": "Votre compte a été créé avec succès. Vous devez valider votre compte via votre adresse e-mail (vérifiez vos spam, si vous n'avez pas reçu l'e-mail).",
+    "buttonSubmit": "Valider mon compte"
+  }
+}

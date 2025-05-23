@@ -2,23 +2,26 @@ import axios from "axios";
 import { RegisterData } from "@/types/auth";
 import { API_URL } from "@/config";
 
-export const registerUser = async (userData: RegisterData) => {
+export interface RegistrationResponse {
+  detail: string;
+  success: boolean;
+}
+
+export const registerUser = async (
+  userData: RegisterData
+): Promise<RegistrationResponse> => {
   try {
-    console.log("Sending registration data:", userData); // Debug log
     const response = await axios.post(
       `${API_URL}/api/auth/registration/`,
       userData
     );
-    console.log("Registration response:", response.data); // Debug log
-    return response.data;
+    return {
+      ...response.data,
+      success: true,
+    };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        console.error(
-          "Server responded with:",
-          error.response.status,
-          error.response.data
-        );
         if (error.response.status === 400) {
           // Gestion spécifique des erreurs de validation Django
           const errorMessage =
@@ -33,16 +36,13 @@ export const registerUser = async (userData: RegisterData) => {
           throw new Error("An error occurred while registering");
         }
       } else if (error.request) {
-        console.error("No response received from server");
         throw new Error(
           "An error occurred while attempting to register. Please try again."
         );
       } else {
-        console.error("Error setting up the request:", error.message);
         throw new Error("An unexpected error occurred while registering");
       }
     }
-    console.error("Unexpected error:", error);
     throw new Error(
       "An unexpected error occurred while attempting to register. Please try again."
     );
