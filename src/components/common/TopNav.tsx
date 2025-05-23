@@ -12,11 +12,13 @@ import { Menu } from "lucide-react";
 import { ThemeToggle, Modal, LanguageToggle } from "@/components/common";
 import { LoginForm, RegistrationForm } from "@/components/authentication";
 import { useModalStore } from "@/stores/modalStore";
+import { useAuthStore } from "@/stores/authStore";
+import { logoutUser } from "@/api/auth/logoutUser";
 
 export const TopNav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { openModal } = useModalStore();
-
+  const { isAuthenticated } = useAuthStore();
   const links = [
     { path: "/contact", title: "Contact" },
     { path: "/about", title: "About" },
@@ -68,10 +70,16 @@ export const TopNav = () => {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button onClick={openLoginModal} variant="outline">
-              Login
-            </Button>
-            <Button onClick={openSignUpModal}>Sign Up</Button>
+            {isAuthenticated ? (
+              <Button onClick={logoutUser}>Logout</Button>
+            ) : (
+              <>
+                <Button onClick={openLoginModal} variant="outline">
+                  Login
+                </Button>
+                <Button onClick={openSignUpModal}>Sign Up</Button>
+              </>
+            )}
             <ThemeToggle />
             <LanguageToggle />
           </div>
